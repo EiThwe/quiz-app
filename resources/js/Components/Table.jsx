@@ -8,7 +8,12 @@ const elements = [
     { position: 58, mass: 140.12, symbol: "Ce", name: "Cerium" },
 ];
 
-export default function TableComponent() {
+export default function TableComponent({
+    questions,
+    setShowViewQuestionModal,
+    setShowEditQuestionModal,
+    fetchQuestionAndAnswers,
+}) {
     const ths = (
         <tr>
             <th className="w-[50px]">ID</th>
@@ -17,16 +22,29 @@ export default function TableComponent() {
         </tr>
     );
 
-    const rows = elements.map((element) => (
-        <tr key={element.name}>
-            <td>{element.position}</td>
-            <td>{element.name}</td>
+    const rows = questions.map((question) => (
+        <tr key={question.id}>
+            <td>{question.id}</td>
+            <td>{question.question}</td>
+
             <td>
                 <div className="flex gap-1">
-                    <button className="px-3 py-[4px] rounded-md bg-blue-500 text-white text-sm">
+                    <button
+                        onClick={() => {
+                            setShowViewQuestionModal(true);
+                            fetchQuestionAndAnswers(question.id);
+                        }}
+                        className="px-3 py-[4px] rounded-md bg-blue-500 text-white text-sm"
+                    >
                         View
                     </button>
-                    <button className="px-3 py-[4px] rounded-md bg-green-500 text-white text-sm">
+                    <button
+                        onClick={() => {
+                            setShowEditQuestionModal(true);
+                            fetchQuestionAndAnswers(question.id);
+                        }}
+                        className="px-3 py-[4px] rounded-md bg-green-500 text-white text-sm"
+                    >
                         Edit
                     </button>
                     <button className="px-3 py-[4px] rounded-md bg-red-500 text-white text-sm">

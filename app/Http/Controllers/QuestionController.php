@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,8 +14,9 @@ class QuestionController extends Controller
      */
     public function index()
     {
+        $questions = Question::with("answers")->get();
         return Inertia::render("Question/Index", [
-            "name" => "Thwe Thwe Htun"
+            "questions" => $questions
         ]);
     }
 
@@ -31,7 +33,20 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $question = Question::create([
+            "question" => $request->question
+        ]);
+        $answers = [];
+        foreach ($request->answers as $answer) {
+            $answer['question_id'] = $question->id;
+            array_push($answers, $answer);
+        }
+        $question->answers()->createMany($answers);
+        //    return Inertia::render("Question/Index",[
+        //     "message" => "Questions and answers are created successfully",
+        //     "token" => rand(1,10000)
+        //    ]);
+        return redirect("/question")->with(["message" => "Questions and answers are created successfully", "token" => rand(1, 10000)]);
     }
 
     /**
@@ -54,8 +69,13 @@ class QuestionController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, Question $question)
+
     {
-        //
+        return $request;
+        //    $question->question = $request->question;
+        //    $question->save();
+        //    return redirect("/question")->with(["message" => "Question is updated successfully", "token" => rand(1, 10000)]);
+
     }
 
     /**
