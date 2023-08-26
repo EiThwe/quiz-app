@@ -13,6 +13,7 @@ export default function TableComponent({
     setShowViewQuestionModal,
     setShowEditQuestionModal,
     fetchQuestionAndAnswers,
+    onDeleteHandler
 }) {
     const ths = (
         <tr>
@@ -22,9 +23,9 @@ export default function TableComponent({
         </tr>
     );
 
-    const rows = questions.map((question) => (
-        <tr key={question.id}>
-            <td>{question.id}</td>
+    const rows = questions.map((question,index) => (
+        <tr key={index+1}>
+            <td>{index+1}</td>
             <td>{question.question}</td>
 
             <td>
@@ -47,7 +48,7 @@ export default function TableComponent({
                     >
                         Edit
                     </button>
-                    <button className="px-3 py-[4px] rounded-md bg-red-500 text-white text-sm">
+                    <button onClick={()=>onDeleteHandler(question.id)} type="button" className="px-3 py-[4px] rounded-md bg-red-500 text-white text-sm">
                         Delete
                     </button>
                 </div>

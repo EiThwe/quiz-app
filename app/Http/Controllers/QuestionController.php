@@ -71,11 +71,9 @@ class QuestionController extends Controller
     public function update(Request $request, Question $question)
 
     {
-        return $request;
-        //    $question->question = $request->question;
-        //    $question->save();
-        //    return redirect("/question")->with(["message" => "Question is updated successfully", "token" => rand(1, 10000)]);
-
+        $question->question = $request->question;
+        $question->save();
+        return redirect("/question")->with(["message" => "Question is updated successfully", "token" => rand(1, 10000)]);
     }
 
     /**
@@ -83,6 +81,7 @@ class QuestionController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        $question->delete();
+        // return redirect("/question")->with(["message" => "Question is deleted successfully", "token" => rand(1, 10000)]);
     }
 }

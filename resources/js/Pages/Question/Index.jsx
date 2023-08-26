@@ -7,6 +7,7 @@ import { Divider, Modal, Table, TextInput } from "@mantine/core";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Toaster, toast } from "react-hot-toast";
 import { router, usePage } from "@inertiajs/react";
+import Swal from "sweetalert2";
 
 import Lottie from "lottie-react";
 import EmptyState from "@/assets/emptystate.json";
@@ -29,7 +30,7 @@ const Index = ({ auth, questions }) => {
     const [selectedQuestion, setSelectedQuestion] = useState("");
     const [selectedAnswers, setSelectedAnswers] = useState([]);
     const [showEditQuestionModal, setShowEditQuestionModal] = useState(false);
-    // const [selectedQuestionId, setSelectedQuestionId] = useState(null);
+    const [selectedQuestionId, setSelectedQuestionId] = useState(null);
 
     console.log(selectedAnswers);
     useEffect(() => {
@@ -69,19 +70,9 @@ const Index = ({ auth, questions }) => {
             }
             return answer;
         });
-        // setNewAnswers(_newAnswers);
+
         return _newAnswers;
     };
-
-    // const onCheckEditHandler = (id,) => {
-    //     const editedAnswers = selectedAnswers.map((answer) => {
-    //         if (answer.id == id) {
-    //             answer.correct_answer = 1;
-    //         } else answer.correct_answer = 0;
-    //         return answer;
-    //     });
-    //     // setSelectedAnswers(editedAnswers);
-    // };
 
     const onSubmitHandler = async () => {
         if (hasAnswerValue() || createdQuestion == "") {
@@ -112,11 +103,29 @@ const Index = ({ auth, questions }) => {
 
     const onQuestionUpdateHandler = (id) => {
         console.log(id);
-        router.put(
-            route("question.update",{ question : id}),
-            selectedQuestion
-        );
+        router.put(route("question.update", { question: id }), {
+            question: selectedQuestion,
+        });
         setShowEditQuestionModal(false);
+    };
+    const onDeleteHandler = (id) => {
+        // router.on('before',()=>{
+        //     return confirm("Are you sure to delete this question?")
+        // })
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                router.delete(route("question.destroy", { question: id }));
+                Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            }
+        });
     };
     const hasAnswerValue = () => {
         return newAnswers.find((answer) => {
@@ -133,9 +142,9 @@ const Index = ({ auth, questions }) => {
     const fetchQuestionAndAnswers = (id) => {
         const question = questions.find((item) => item.id == id);
         // console.log(question);
-        // setSelectedQuestionId(question.id);
-        setSelectedQuestion(question);
-        console.log(selectedQuestion);
+        setSelectedQuestionId(question.id);
+        setSelectedQuestion(question.question);
+
         setSelectedAnswers(question.answers);
     };
 
@@ -279,7 +288,7 @@ const Index = ({ auth, questions }) => {
                             input: "border-gray-300 rounded-md mb-3",
                             label: "text-lg mb-2",
                         }}
-                        value={selectedQuestion.question}
+                        value={selectedQuestion}
                         onChange={(e) => setSelectedQuestion(e.target.value)}
                     />
                     <Table horizontalSpacing={"xs"}>
@@ -338,7 +347,7 @@ const Index = ({ auth, questions }) => {
                     <div className="float-right my-2">
                         <div className="flex gap-3 justify-center items-center">
                             <button
-                                onClick={close}
+                                onClick={()=>setShowViewQuestionModal(false)}
                                 className="px-2  py-1 rounded-md bg-red-500 hover:bg-opacity-90 text-sm active:bg-opacity-70 text-white "
                             >
                                 Close
@@ -370,7 +379,7 @@ const Index = ({ auth, questions }) => {
                             input: "border-gray-300 rounded-md mb-3",
                             label: "text-lg mb-2",
                         }}
-                        value={selectedQuestion.question}
+                        value={selectedQuestion}
                         onChange={(e) => setSelectedQuestion(e.target.value)}
                     />
                     <Divider className="mt-5" />
@@ -389,7 +398,7 @@ const Index = ({ auth, questions }) => {
                                 }
                                 className="px-2 py-1  rounded-md bg-green-500 hover:bg-opacity-90 text-sm active:bg-opacity-70 text-white "
                             >
-                                Save
+                                Update
                             </button>
                         </div>
                     </div>
@@ -401,6 +410,7 @@ const Index = ({ auth, questions }) => {
                         setShowViewQuestionModal={setShowViewQuestionModal}
                         setShowEditQuestionModal={setShowEditQuestionModal}
                         fetchQuestionAndAnswers={fetchQuestionAndAnswers}
+                        onDeleteHandler={onDeleteHandler}
                     />
                 ) : (
                     <div className="w-full h-full flex justify-center items-center">
