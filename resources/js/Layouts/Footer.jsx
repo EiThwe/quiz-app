@@ -6,12 +6,7 @@ import {
     rem,
     Text,
 } from "@mantine/core";
-// import {
-//     IconBrandTwitter,
-//     IconBrandYoutube,
-//     IconBrandInstagram,
-// } from "@tabler/icons-react";
-// import { MantineLogo } from "@mantine/ds";
+
 import { Link } from "@inertiajs/react";
 
 const useStyles = createStyles((theme) => ({
@@ -31,7 +26,7 @@ const useStyles = createStyles((theme) => ({
         margin: "0 auto",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: `${theme.spacing.md} ${theme.spacing.md}`,
+        padding: `1.6em ${theme.spacing.md}`,
 
         [theme.fn.smallerThan("sm")]: {
             flexDirection: "column",
@@ -73,17 +68,7 @@ function Footer({ links }) {
 
                 <Group className={classes.links}>{items}</Group>
 
-                {/* <Group spacing="xs" position="right" noWrap>
-                    <ActionIcon size="lg" variant="default" radius="xl">
-                        <IconBrandTwitter size="1.05rem" stroke={1.5} />
-                    </ActionIcon>
-                    <ActionIcon size="lg" variant="default" radius="xl">
-                        <IconBrandYoutube size="1.05rem" stroke={1.5} />
-                    </ActionIcon>
-                    <ActionIcon size="lg" variant="default" radius="xl">
-                        <IconBrandInstagram size="1.05rem" stroke={1.5} />
-                    </ActionIcon>
-                </Group> */}
+
             </div>
         </div>
     );

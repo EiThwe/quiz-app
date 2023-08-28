@@ -174,6 +174,7 @@ const Index = ({ auth, questions }) => {
 
                 {/* New Question Modal */}
                 <Modal
+                    zIndex={1000}
                     opened={opened}
                     onClose={close}
                     title="Add New Question"
@@ -274,6 +275,7 @@ const Index = ({ auth, questions }) => {
 
                 {/* view Question and Answer Modal */}
                 <Modal
+                    zIndex={1000}
                     opened={showViewQuestionModal}
                     onClose={() => setShowViewQuestionModal(false)}
                     title="View Question and Answers"
@@ -347,7 +349,7 @@ const Index = ({ auth, questions }) => {
                     <div className="float-right my-2">
                         <div className="flex gap-3 justify-center items-center">
                             <button
-                                onClick={()=>setShowViewQuestionModal(false)}
+                                onClick={() => setShowViewQuestionModal(false)}
                                 className="px-2  py-1 rounded-md bg-red-500 hover:bg-opacity-90 text-sm active:bg-opacity-70 text-white "
                             >
                                 Close
@@ -365,6 +367,7 @@ const Index = ({ auth, questions }) => {
 
                 {/* Edit Question */}
                 <Modal
+                    zIndex={1000}
                     opened={showEditQuestionModal}
                     onClose={() => setShowEditQuestionModal(false)}
                     title="Edit Question"

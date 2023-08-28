@@ -5,6 +5,7 @@ import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import Footer from "./Footer";
+import { NavbarNested } from "@/Components/NavBar";
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -16,18 +17,24 @@ export default function Authenticated({ user, header, children }) {
     ];
 
     return (
-        <div className="min-h-screen bg-[#FAFAFA] flex flex-col">
-            <nav className="bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="">
+            {/* <nav className="bg-white border-b border-gray-100">
+                <div className=" mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
-                            <div className="shrink-0 flex items-center">
-                                <Link href="/">
+                            <div className="w-64  shrink-0 flex items-center">
+                                <Link
+                                    href="/"
+                                    className=" flex gap-3 items-center"
+                                >
                                     <img
                                         src="https://i.postimg.cc/pTD8L4ZM/quiz.png"
                                         alt=""
                                         className="block h-10 w-auto fill-current"
                                     />
+                                    <h3 className="font-bold font-sans text-2xl">
+                                        Quiz App
+                                    </h3>
                                 </Link>
                             </div>
 
@@ -180,19 +187,22 @@ export default function Authenticated({ user, header, children }) {
                         </div>
                     </div>
                 </div>
-            </nav>
+            </nav> */}
+            <div className="w-full h-screen bg-[#FAFAFA] flex">
+                <NavbarNested />
+                <div className="w-full flex flex-col justify-between">
+                    {header && (
+                        <header className="bg-white border-b">
+                            <div className="max-w-7xl text-sm mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                                {header}
+                            </div>
+                        </header>
+                    )}
 
-            {header && (
-                <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {header}
-                    </div>
-                </header>
-            )}
-
-            <main>{children}</main>
-
-            <Footer links={links} />
+                    <main>{children}</main>
+                    <Footer links={links} />
+                </div>
+            </div>
         </div>
     );
 }
