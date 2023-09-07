@@ -1,13 +1,4 @@
-import {
-    createStyles,
-    Anchor,
-    Group,
-    ActionIcon,
-    rem,
-    Text,
-} from "@mantine/core";
-
-import { Link } from "@inertiajs/react";
+import { createStyles, Anchor, Group, rem, Text } from "@mantine/core";
 
 const useStyles = createStyles((theme) => ({
     footer: {
@@ -17,7 +8,7 @@ const useStyles = createStyles((theme) => ({
                 ? theme.colors.dark[5]
                 : theme.colors.gray[2]
         }`,
-        backgroundColor:"white"
+        backgroundColor: "white",
     },
 
     inner: {
@@ -44,7 +35,6 @@ const useStyles = createStyles((theme) => ({
 function Footer({ links }) {
     const { classes } = useStyles();
     const items = links.map((link) => (
-        // <Link href={link.link}>
         <Anchor
             color="dimmed"
             key={link.label}
@@ -55,7 +45,6 @@ function Footer({ links }) {
         >
             {link.label}
         </Anchor>
-        // </Link>
     ));
 
     return (
@@ -67,8 +56,6 @@ function Footer({ links }) {
                 </Text>
 
                 <Group className={classes.links}>{items}</Group>
-
-
             </div>
         </div>
     );

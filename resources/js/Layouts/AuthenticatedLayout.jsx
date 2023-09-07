@@ -189,17 +189,16 @@ export default function Authenticated({ user, header, children }) {
                 </div>
             </nav> */}
             <div className="w-full h-screen bg-[#FAFAFA] flex">
-                <NavbarNested />
-                <div className="w-full flex flex-col justify-between">
+                <NavbarNested user={user} />
+                <div className="w-full flex flex-col justify-between ml-[300px]">
                     {header && (
-                        <header className="bg-white border-b">
-                            <div className="max-w-7xl text-sm mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        <header className="bg-white border-b fixed w-full">
+                            <div className=" text-sm mx-auto py-6 px-4 sm:px-6 lg:px-8">
                                 {header}
                             </div>
                         </header>
                     )}
-
-                    <main>{children}</main>
+                     <main className="mt-[70px]">{children}</main>
                     <Footer links={links} />
                 </div>
             </div>

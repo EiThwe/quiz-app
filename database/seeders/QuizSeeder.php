@@ -18,6 +18,8 @@ class QuizSeeder extends Seeder
             [
                 "id" => 1,
                 "question" => "What does HTML stands for",
+                "user_id" => 1,
+                "subject_id"=>1,
                 "created_at" => now(),
                 "updated_at" => now()
 
@@ -25,6 +27,8 @@ class QuizSeeder extends Seeder
             [
                 "id" => 3,
                 "question" => "What is the correct Html element for the largest heading",
+                "user_id" => 1,
+                "subject_id"=>1,
                 "created_at" => now(),
                 "updated_at" => now()
 
@@ -32,6 +36,8 @@ class QuizSeeder extends Seeder
             [
                 "id" => 2,
                 "question" => "Who is making the Web Standards",
+                "user_id" => 1,
+                "subject_id"=>1,
                 "created_at" => now(),
                 "updated_at" => now()
 
@@ -39,6 +45,8 @@ class QuizSeeder extends Seeder
             [
                 "id" => 4,
                 "question" => "What is the correct Html element for inserting a line break",
+                "user_id" => 1,
+                "subject_id"=>1,
                 "created_at" => now(),
                 "updated_at" => now()
 
@@ -46,6 +54,8 @@ class QuizSeeder extends Seeder
             [
                 "id" => 5,
                 "question" => "What is the correct html for add a background color",
+                "user_id" => 1,
+                "subject_id"=>1,
                 "created_at" => now(),
                 "updated_at" => now()
             ]

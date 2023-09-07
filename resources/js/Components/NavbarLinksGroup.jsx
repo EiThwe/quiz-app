@@ -8,13 +8,14 @@ import {
     UnstyledButton,
     createStyles,
     rem,
+    Anchor,
 } from "@mantine/core";
 import {
     IconCalendarStats,
     IconChevronLeft,
     IconChevronRight,
 } from "@tabler/icons-react";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
 const useStyles = createStyles((theme) => ({
     control: {
@@ -67,7 +68,14 @@ const useStyles = createStyles((theme) => ({
     },
 }));
 
-export function LinksGroup({ icon: Icon, label, initiallyOpened, links }) {
+export function LinksGroup({
+    icon: Icon,
+    label,
+    initiallyOpened,
+    link,
+    links,
+}) {
+    console.log("I'm Links Group");
     const { classes, theme } = useStyles();
     const hasLinks = Array.isArray(links);
     const [opened, setOpened] = useState(initiallyOpened || false);
@@ -75,20 +83,26 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links }) {
         theme.dir === "ltr" ? IconChevronRight : IconChevronLeft;
     const items = (hasLinks ? links : []).map((link) => (
         <Link
-            component="a"
             className={classes.link}
             href={link.link}
             key={link.label}
-            onClick={(event) => event.preventDefault()}
+            // onClick={(event) => event.preventDefault()}
         >
             {link.label}
         </Link>
     ));
 
+    const navigateLink = () => {
+        return router.visit(link);
+    };
     return (
         <>
             <UnstyledButton
-                onClick={() => setOpened((o) => !o)}
+                onClick={() =>{
+                    hasLinks ? setOpened((o) => !o) : navigateLink();
+                    console.log("clicked")
+                }
+                }
                 className={classes.control}
             >
                 <Group position="apart" spacing={0}>
@@ -97,6 +111,7 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links }) {
                             <Icon size="1.1rem" />
                         </ThemeIcon>
                         <Box ml="md">{label}</Box>
+                        {/* <Link href="/dashboard">{label}</Link> */}
                     </Box>
                     {hasLinks && (
                         <ChevronIcon
@@ -123,7 +138,7 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links }) {
 //     label: "Releases",
 //     icon: IconCalendarStats,
 //     links: [
-//         { label: "Upcoming releases", link: "/" },
+//         { label: "Hello", link: "/" },
 //         { label: "Previous releases", link: "/" },
 //         { label: "Releases schedule", link: "/" },
 //     ],
