@@ -1,5 +1,5 @@
 import { DateInput } from "@mantine/dates";
-import React from "react";
+import React, { useState } from "react";
 
 import { IconCalendar } from "@tabler/icons-react";
 import { Radio, Select, TextInput, Textarea } from "@mantine/core";
@@ -22,7 +22,6 @@ const PersonalForm = ({ form }) => {
                         classNames={{
                             input: "py-5 rounded-md border-gray-300 placeholder:font-[400] placeholder:text-[#6B7280] text-[16px] text-gray-800",
                         }}
-                        
                         {...form.getInputProps("name")}
                     />
                 </div>
@@ -63,12 +62,14 @@ const PersonalForm = ({ form }) => {
                     <Radio
                         label="Male"
                         classNames={{ label: "mt-1", radio: "border-gray-400" }}
-                        {...form.getInputProps("gender")}
+                        checked={form.values.gender == "male"}
+                        onChange={(e) => form.setFieldValue("gender", "male")}
                     />
                     <Radio
                         label="Female"
                         classNames={{ label: "mt-1", radio: "border-gray-400" }}
-                        {...form.getInputProps("gender")}
+                        checked={form.values.gender == "female"}
+                        onChange={(e) => form.setFieldValue("gender", "female")}
                     />
                 </div>
             </div>

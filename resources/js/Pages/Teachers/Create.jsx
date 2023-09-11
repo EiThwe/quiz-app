@@ -41,7 +41,7 @@ const Create = ({ auth }) => {
 
         validate: {
             email: (value) =>
-                /^\S+@\S+$/.test(value) ? null : "Invalid email",
+            /^\S+@\S+$/.test(value) ? null : "Invalid email",
         },
     });
     console.log(form);
