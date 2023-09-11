@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Teacher;
 use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
+use Inertia\Inertia;
 
 class TeacherController extends Controller
 {
@@ -21,7 +22,7 @@ class TeacherController extends Controller
      */
     public function create()
     {
-        //
+       return Inertia::render("Teachers/Create");
     }
 
     /**
@@ -29,7 +30,7 @@ class TeacherController extends Controller
      */
     public function store(StoreTeacherRequest $request)
     {
-        
+
     }
 
     /**

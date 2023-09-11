@@ -46,7 +46,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource("question", QuestionController::class)->only(["index", "store", "update", "destroy"]);
     Route::put('/answers', [AnswerController::class, 'update'])->name('answer.update');
-//    Route::post("/users/register",[UserController::class,'register'])->name("user.register");
+
+    Route::controller(TeacherController::class)->group(function () {
+        Route::get('/teachers', 'index')->name("teacher.index");
+        Route::get('/create-teacher', 'create')->name("teacher.create");
+        Route::post('/teachers', 'store')->name("teacher.store");
+    });
+    //    Route::post("/users/register",[UserController::class,'register'])->name("user.register");
 });
 
 Route::fallback(function () {

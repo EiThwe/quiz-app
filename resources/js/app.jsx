@@ -21,7 +21,7 @@ createInertiaApp({
 
         root.render(
             <MantineProvider
-                theme={{ fontFamily: "Figtree, sans-serif" }}
+                theme={{  }}
                 withGlobalStyles
                 withNormalizeCSS
             >

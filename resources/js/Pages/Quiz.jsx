@@ -67,12 +67,12 @@ export default function Quiz({ auth, laravelVersion, phpVersion, questions }) {
                                     Log in
                                 </Link>
 
-                                <Link
+                                {/* <Link
                                     href={route("register")}
                                     className=" font-semibold text-gray-400 hover:text-blue-400  focus:outline focus:outline-2 focus:rounded-sm focus:outline-blue-500"
                                 >
                                     Register
-                                </Link>
+                                </Link> */}
                             </div>
                         )}
                     </div>

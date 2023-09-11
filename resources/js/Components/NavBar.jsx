@@ -18,6 +18,8 @@ import {
     IconUser,
     IconKey,
     IconUsersGroup,
+    IconSchool,
+    IconChalkboard,
 } from "@tabler/icons-react";
 import { UserButton } from "./UserButton";
 import { LinksGroup } from "./NavbarLinksGroup";
@@ -28,6 +30,11 @@ const mockdata = [
         label: "Dashboard",
         icon: IconGauge,
         link: "/dashboard",
+    },
+    {
+        label: "Grades",
+        icon: IconSchool,
+        link: "/",
     },
     {
         label: "Questions",
@@ -46,10 +53,10 @@ const mockdata = [
     },
     {
         label: "Teachers",
-        icon: IconCalendarStats,
+        icon: IconChalkboard,
         links: [
             { label: "Teachers List", link: "/teachers" },
-            // { label: "Edit Teacher Info", link: "/" },
+            { label: "Create Teacher", link: "/create-teacher" },
             // { label: "Releases schedule", link: "/" },
         ],
     },
@@ -67,7 +74,7 @@ const mockdata = [
     },
     {
         label: "Departments",
-        icon:  IconPresentationAnalytics,
+        icon: IconPresentationAnalytics,
         links: [
             { label: "Department List", link: "/" },
             { label: "Create Department", link: "/" },
