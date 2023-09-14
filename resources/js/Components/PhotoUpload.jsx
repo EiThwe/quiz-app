@@ -11,7 +11,7 @@ const PhotoUpload = ({ form }) => {
         // data for submit
         console.log(imageList, addUpdateIndex);
         setImages(imageList);
-        form.setFieldValue("images", imageList);
+        form.setFieldValue("photos", imageList);
     };
     return (
         <div className="w-full h-full flex flex-col gap-5 justify-center items-center">

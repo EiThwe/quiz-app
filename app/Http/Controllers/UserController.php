@@ -24,7 +24,7 @@ class UserController extends Controller
             "address" => "required|min:50",
             'email' => 'required|string|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            // 'photos' => 
+            // 'photos' =>
         ]);
         logger($request->file('photos'));
         // if ($request->hasFile("photos")) {
@@ -71,4 +71,5 @@ class UserController extends Controller
         // }
         return response()->json(["message" => "User created successfully"]);
     }
+   
 }

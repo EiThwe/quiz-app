@@ -3,7 +3,8 @@ import React from "react";
 
 const Tab = ({ active, setActive, data }) => {
     const onClickHandler = (id) => setActive(id);
-    const onNextClickHandler = () => {
+    const onNextClickHandler = (e) => {
+        e.preventDefault();
         if (active != data.length) {
             setActive((prev) => prev + 1);
         }

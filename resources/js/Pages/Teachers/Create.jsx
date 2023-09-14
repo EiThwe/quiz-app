@@ -3,6 +3,7 @@ import PersonalForm from "@/Components/PersonalForm";
 import PhotoUpload from "@/Components/PhotoUpload";
 import Tab from "@/Components/Tab";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
+import { router } from "@inertiajs/react";
 import { useForm } from "@mantine/form";
 import {
     IconArrowAutofitRight,
@@ -29,15 +30,16 @@ const Create = ({ auth }) => {
     const [active, setActive] = useState(1);
     const form = useForm({
         initialValues: {
-            name: "",
+            name: "Chit Chit",
             date_of_birth: "",
-            gender: "",
-            address: "",
-            email: "",
-            phone_number: "",
-            password: "",
-            password_confirmation: "",
-            images: [],
+            gender: "male",
+            address: "ghasjljalkj",
+            email: "cc@gmail.com",
+            role: "teacher",
+            phone_number: "099887765541",
+            password: "11223344",
+            password_confirmation: "11223344",
+            photos: [],
         },
 
         // validate: {
@@ -45,7 +47,12 @@ const Create = ({ auth }) => {
         //     /^\S+@\S+$/.test(value) ? null : "Invalid email",
         // },
     });
-    console.log(form);
+    const onSubmitHandler = (values)=>{
+        // e.preventDefault();
+        console.log(values);
+         router.post("/teachers",values)
+    }
+
     return (
         <Authenticated
             user={auth.user}
@@ -58,9 +65,7 @@ const Create = ({ auth }) => {
             <div className="p-8 flex">
                 <div className="w-[70%] shadow-lg rounded-md p-8 bg-white h-[430px]">
                     <form
-                        onSubmit={form.onSubmit((values) =>
-                            console.log(values)
-                        )}
+                        onSubmit={form.onSubmit((values)=>onSubmitHandler(values))}
                         id="user_form"
                     >
                         {active == 1 && <PersonalForm form={form} />}
