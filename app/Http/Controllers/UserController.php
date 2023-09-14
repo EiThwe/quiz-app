@@ -24,41 +24,51 @@ class UserController extends Controller
             "address" => "required|min:50",
             'email' => 'required|string|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'user_photo' => "required|file"
+            // 'photos' => 
         ]);
-        if ($request->hasFile("user_photo")) {
-            $photo = $request->file('user_photo');
-            $savedPhoto = $photo->store("public/media");
-            $photoUrl = asset(Storage::url($savedPhoto));
-        }
-        $user = User::create([
-            "name" => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-            'user_photo' => $photoUrl
-        ]);
-        if ($request->role == "teacher") {
-            Teacher::create([
-                "name" => $request->name,
-                "date_of_birth" => $request->date_of_birth,
-                "address" => $request->address,
-                "phone_number" => $request->phone_number,
-                "gender" => $request->gender,
-                "user_id" => $user->id,
-                "grade_id" => $request->grade_id
-            ]);
-        } else if ($request->role == "stuff") {
-            Stuff::create([
-                "name" => $request->name,
-                "date_of_birth" => $request->date_of_birth,
-                "address" => $request->address,
-                "phone_number" => $request->phone_number,
-                "gender" => $request->gender,
-                "user_id" => $user->id,
-                "department_id" => $request->department_id
-            ]);
-        }
+        logger($request->file('photos'));
+        // if ($request->hasFile("photos")) {
+        //     $photos = $request->file('photos');
+        //     $firstPhoto = $photos[0];
+        //     $savedPhoto = $firstPhoto->store("public/media");
+        //     $photoUrl = asset(Storage::url($savedPhoto));
+        // }
+        // if ($request->hasFile('user_photos')) {
+        //     $photos = $request->file("user_photos");
+        //     $savedPhotos = [];
+
+        //     foreach ($photos as $photo) {
+        //         $savedPhoto = $photo->store("public/media");
+        //         $photoUrl = asset(Storage::url($savedPhoto));
+        //     }
+        // $user = User::create([
+        //     "name" => $request->name,
+        //     'email' => $request->email,
+        //     'password' => Hash::make($request->password),
+        //     'role' => $request->role,
+        //     'user_photo' => $photoUrl
+        // ]);
+        // if ($request->role == "teacher") {
+        //     Teacher::create([
+        //         "name" => $request->name,
+        //         "date_of_birth" => $request->date_of_birth,
+        //         "address" => $request->address,
+        //         "phone_number" => $request->phone_number,
+        //         "gender" => $request->gender,
+        //         "user_id" => $user->id,
+        //         "grade_id" => $request->grade_id
+        //     ]);
+        // } else if ($request->role == "stuff") {
+        //     Stuff::create([
+        //         "name" => $request->name,
+        //         "date_of_birth" => $request->date_of_birth,
+        //         "address" => $request->address,
+        //         "phone_number" => $request->phone_number,
+        //         "gender" => $request->gender,
+        //         "user_id" => $user->id,
+        //         "department_id" => $request->department_id
+        //     ]);
+        // }
         return response()->json(["message" => "User created successfully"]);
     }
 }

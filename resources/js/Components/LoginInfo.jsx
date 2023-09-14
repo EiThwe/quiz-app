@@ -21,6 +21,8 @@ const LoginInfo = ({form}) => {
                         classNames={{
                             input: "py-5 rounded-md border-gray-300 placeholder:font-[400] placeholder:text-[#6B7280] text-[16px] text-gray-800",
                         }}
+                        {...form.getInputProps("email")}
+
                     />
                 </div>
             </div>
@@ -39,6 +41,8 @@ const LoginInfo = ({form}) => {
                         classNames={{
                             input: "py-5 rounded-md border-gray-300 placeholder:font-[400] placeholder:text-[#6B7280] text-[16px] text-gray-800",
                         }}
+                        {...form.getInputProps("phone_number")}
+
                     />
                 </div>
             </div>
@@ -65,6 +69,8 @@ const LoginInfo = ({form}) => {
                             innerInput: "border-transparent py-5",
                             input: "py-5",
                         }}
+                        {...form.getInputProps("password")}
+
                     />
                 </div>
             </div>
@@ -92,6 +98,8 @@ const LoginInfo = ({form}) => {
 
                             input: "py-5",
                         }}
+                        {...form.getInputProps("password_confirmation")}
+
                     />
                 </div>
             </div>

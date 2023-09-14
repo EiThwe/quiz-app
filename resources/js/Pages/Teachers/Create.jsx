@@ -34,15 +34,16 @@ const Create = ({ auth }) => {
             gender: "",
             address: "",
             email: "",
+            phone_number: "",
             password: "",
             password_confirmation: "",
             images: [],
         },
 
-        validate: {
-            email: (value) =>
-            /^\S+@\S+$/.test(value) ? null : "Invalid email",
-        },
+        // validate: {
+        //     email: (value) =>
+        //     /^\S+@\S+$/.test(value) ? null : "Invalid email",
+        // },
     });
     console.log(form);
     return (
