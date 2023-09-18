@@ -1,3 +1,4 @@
+import FlashMessage from "@/Components/FlashMessage";
 import LoginInfo from "@/Components/LoginInfo";
 import PersonalForm from "@/Components/PersonalForm";
 import PhotoUpload from "@/Components/PhotoUpload";
@@ -27,21 +28,22 @@ const mockdata = [
     },
 ];
 
-const Create = ({ errors, auth, grades }) => {
-    console.log(errors)
+const Create = ({ errors, flash, auth, grades }) => {
+    console.log(flash);
+    console.log(errors);
     const { message, token } = usePage().props.flash;
     const [alert, setAlert] = useState(false);
 
     const [active, setActive] = useState(1);
 
-    useEffect(() => {
-        if (message) {
-            setAlert(true);
-            setTimeout(() => {
-                setAlert(false);
-            }, 2000);
-        }
-    }, [token]);
+    // useEffect(() => {
+    //     if (message) {
+    //         setAlert(true);
+    //         setTimeout(() => {
+    //             setAlert(false);
+    //         }, 2000);
+    //     }
+    // }, [token]);
 
     const form = useForm({
         initialValues: {
@@ -89,9 +91,9 @@ const Create = ({ errors, auth, grades }) => {
     });
 
     const onSubmitHandler = (values) => {
-        values["date_of_birth"] = dayjs(values["date_of_birth"]).format(
-            "M/D/YYYY"
-        );
+        // values["date_of_birth"] = dayjs(values["date_of_birth"]).format(
+        //     "M/D/YYYY"
+        // );
         console.log(values);
 
         router.post("/teachers", values);
@@ -106,20 +108,14 @@ const Create = ({ errors, auth, grades }) => {
                 </h2>
             }
         >
-            {errors && (
-                <div className="alert alert-danger">
-                    <ul>
-                        {Object.keys(errors).map((field) => (
-                            <li key={field}>{errors[field][0]}</li>
-                        ))}
-                    </ul>
-                </div>
+            {flash.message && (
+                <FlashMessage message={flash.message} type={flash.type} />
             )}
-            {alert && (
+            {/* {alert && (
                 <div className="bg-green-300 px-5 py-2 rounded-md mx-10 mt-5">
                     {message}
                 </div>
-            )}
+            )} */}
 
             <div className="p-8 flex">
                 <div className="w-[70%] shadow-lg rounded-md p-8 bg-white min-h-[430px]">
@@ -139,7 +135,9 @@ const Create = ({ errors, auth, grades }) => {
                         {active == 1 && (
                             <PersonalForm form={form} grades={grades} />
                         )}
-                        {active == 2 && <LoginInfo form={form} errors={errors}/>}
+                        {active == 2 && (
+                            <LoginInfo form={form} errors={errors} />
+                        )}
                         {active == 3 && <PhotoUpload form={form} />}
                     </form>
                 </div>

@@ -9,6 +9,7 @@ use App\Models\Grade;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Illuminate\Validation\Rules;
 
@@ -26,9 +27,10 @@ class TeacherController extends Controller
 
     public function store(StoreTeacherRequest $request)
     {
-        logger($request->hasFile("photos"));
+        // logger($request->hasFile("photos"));
 
-        $request->validate([
+
+        $validators = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             "phone_number" => "required|numeric|min:9",
             "date_of_birth" => "required|date",
@@ -39,6 +41,11 @@ class TeacherController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'photos' => "required|array"
         ]);
+        if ($validators->fails()) {
+            session()->flash('message', 'The item has been failed.');
+            session()->flash('type', 'error');
+            return redirect()->back();
+        }
 
         if ($request->hasFile("photos")) {
             $photos = $request->file('photos');
@@ -65,7 +72,10 @@ class TeacherController extends Controller
                 "grade_id" => $request->grade_id
             ]);
         }
-        return redirect("/create-teacher")->with(["message" => "A teacher is created successfully", "token" => rand(1, 10000)])->with('errors', $request->session()->get('errors'));;
+        $grades = Grade::all();
+
+        // return Inertia::render("Teachers/Create", ["message" => "A teacher is created successfully", "grades" => $grades, "errors" => $request->session()->get('errors')]);
+        return redirect("/create-teacher")->with('errors', $request->session()->get('errors'));
     }
 
     public function show(Teacher $teacher)
