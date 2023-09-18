@@ -4,7 +4,13 @@ import React, { useState } from "react";
 import { IconCalendar } from "@tabler/icons-react";
 import { Radio, Select, TextInput, Textarea } from "@mantine/core";
 
-const PersonalForm = ({ form }) => {
+const PersonalForm = ({ form, grades }) => {
+    // console.log(grades)
+    const options = grades.map((item) => {
+        return { value: item.id, label: item.name };
+    });
+    console.log(options);
+
     return (
         <div className="w-full flex flex-col gap-5">
             <div className="flex w-full items-center">
@@ -23,6 +29,7 @@ const PersonalForm = ({ form }) => {
                             input: "py-5 rounded-md border-gray-300 placeholder:font-[400] placeholder:text-[#6B7280] text-[16px] text-gray-800",
                         }}
                         {...form.getInputProps("name")}
+                        // error={form.errors.name}
                     />
                 </div>
             </div>
@@ -46,6 +53,7 @@ const PersonalForm = ({ form }) => {
                             icon: "text-blue-500",
                         }}
                         {...form.getInputProps("date_of_birth")}
+                        // error={form.errors.date_of_birth}
                     />
                 </div>
             </div>
@@ -85,16 +93,12 @@ const PersonalForm = ({ form }) => {
                 <div className="w-[70%] ">
                     <Select
                         placeholder="Pick one"
-                        data={[
-                            { value: "react", label: "React" },
-                            { value: "ng", label: "Angular" },
-                            { value: "svelte", label: "Svelte" },
-                            { value: "vue", label: "Vue" },
-                        ]}
+                        data={options}
                         classNames={{
                             input: "py-5 rounded-md border-gray-300 placeholder:font-[400] placeholder:text-[#6B7280] text-[16px] text-gray-800",
                         }}
-                        {...form.getInputProps("grade")}
+                        {...form.getInputProps("grade_id")}
+
                     />
                 </div>
             </div>
@@ -112,6 +116,7 @@ const PersonalForm = ({ form }) => {
                         className="w-full"
                         minRows={5}
                         {...form.getInputProps("address")}
+                        // error={form.errors.address}
                     />
                 </div>
             </div>

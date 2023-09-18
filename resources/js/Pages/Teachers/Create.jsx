@@ -3,13 +3,14 @@ import PersonalForm from "@/Components/PersonalForm";
 import PhotoUpload from "@/Components/PhotoUpload";
 import Tab from "@/Components/Tab";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import { useForm } from "@mantine/form";
 import {
     IconArrowAutofitRight,
     IconArrowNarrowRight,
 } from "@tabler/icons-react";
-import React, { useState } from "react";
+import dayjs from "dayjs";
+import React, { useEffect, useState } from "react";
 
 const mockdata = [
     {
@@ -26,8 +27,22 @@ const mockdata = [
     },
 ];
 
-const Create = ({ auth }) => {
+const Create = ({ errors, auth, grades }) => {
+    console.log(errors)
+    const { message, token } = usePage().props.flash;
+    const [alert, setAlert] = useState(false);
+
     const [active, setActive] = useState(1);
+
+    useEffect(() => {
+        if (message) {
+            setAlert(true);
+            setTimeout(() => {
+                setAlert(false);
+            }, 2000);
+        }
+    }, [token]);
+
     const form = useForm({
         initialValues: {
             name: "Chit Chit",
@@ -36,22 +51,51 @@ const Create = ({ auth }) => {
             address: "ghasjljalkj",
             email: "cc@gmail.com",
             role: "teacher",
+            grade_id: "",
             phone_number: "099887765541",
             password: "11223344",
             password_confirmation: "11223344",
             photos: [],
         },
 
-        // validate: {
-        //     email: (value) =>
-        //     /^\S+@\S+$/.test(value) ? null : "Invalid email",
-        // },
+        validate: {
+            name: (value) => (value ? null : "Name is required"),
+            phone_number: (value) =>
+                value && value.length >= 9
+                    ? null
+                    : "Phone number must be at least 9 digits",
+            date_of_birth: (value) =>
+                value ? null : "Date of birth is required",
+            gender: (value) =>
+                value && ["male", "female"].includes(value)
+                    ? null
+                    : "Gender must be male or female",
+            grade_id: (value) => (value ? null : " Grade is required"),
+            address: (value) =>
+                value && value.length >= 50
+                    ? null
+                    : "Address must be at least 50 characters",
+            email: (value) =>
+                /^\S+@\S+$/.test(value) ? null : "Invalid email",
+            password: (value) =>
+                value.length < 8
+                    ? "Your password must be at least 8 characters"
+                    : null,
+            password_confirmation: (value, values) =>
+                value !== values.password ? "Passwords did not match" : null,
+            photos: (value) =>
+                value && value.length > 0 ? null : "Photo is required",
+        },
     });
-    const onSubmitHandler = (values)=>{
-        // e.preventDefault();
+
+    const onSubmitHandler = (values) => {
+        values["date_of_birth"] = dayjs(values["date_of_birth"]).format(
+            "M/D/YYYY"
+        );
         console.log(values);
-         router.post("/teachers",values)
-    }
+
+        router.post("/teachers", values);
+    };
 
     return (
         <Authenticated
@@ -62,14 +106,40 @@ const Create = ({ auth }) => {
                 </h2>
             }
         >
+            {errors && (
+                <div className="alert alert-danger">
+                    <ul>
+                        {Object.keys(errors).map((field) => (
+                            <li key={field}>{errors[field][0]}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+            {alert && (
+                <div className="bg-green-300 px-5 py-2 rounded-md mx-10 mt-5">
+                    {message}
+                </div>
+            )}
+
             <div className="p-8 flex">
-                <div className="w-[70%] shadow-lg rounded-md p-8 bg-white h-[430px]">
+                <div className="w-[70%] shadow-lg rounded-md p-8 bg-white min-h-[430px]">
                     <form
-                        onSubmit={form.onSubmit((values)=>onSubmitHandler(values))}
+                        onSubmit={form.onSubmit(
+                            (values, _event) => {
+                                onSubmitHandler(values);
+                            },
+                            (validationErrors, _values, _event) => {
+                                if (validationErrors) {
+                                    setActive(1);
+                                }
+                            }
+                        )}
                         id="user_form"
                     >
-                        {active == 1 && <PersonalForm form={form} />}
-                        {active == 2 && <LoginInfo form={form} />}
+                        {active == 1 && (
+                            <PersonalForm form={form} grades={grades} />
+                        )}
+                        {active == 2 && <LoginInfo form={form} errors={errors}/>}
                         {active == 3 && <PhotoUpload form={form} />}
                     </form>
                 </div>

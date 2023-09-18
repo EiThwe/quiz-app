@@ -3,7 +3,7 @@ import React from "react";
 import { PasswordInput, TextInput } from "@mantine/core";
 import { IconEyeCheck, IconEyeOff } from "@tabler/icons-react";
 
-const LoginInfo = ({form}) => {
+const LoginInfo = ({errors, form }) => {
     return (
         <div className="w-full flex flex-col gap-5">
             <div className="flex w-full items-center">
@@ -22,7 +22,7 @@ const LoginInfo = ({form}) => {
                             input: "py-5 rounded-md border-gray-300 placeholder:font-[400] placeholder:text-[#6B7280] text-[16px] text-gray-800",
                         }}
                         {...form.getInputProps("email")}
-
+                        error={errors.email}
                     />
                 </div>
             </div>
@@ -42,7 +42,7 @@ const LoginInfo = ({form}) => {
                             input: "py-5 rounded-md border-gray-300 placeholder:font-[400] placeholder:text-[#6B7280] text-[16px] text-gray-800",
                         }}
                         {...form.getInputProps("phone_number")}
-
+                        // error={form.errors.phone_number}
                     />
                 </div>
             </div>
@@ -70,7 +70,7 @@ const LoginInfo = ({form}) => {
                             input: "py-5",
                         }}
                         {...form.getInputProps("password")}
-
+                        // error={form.errors.password}
                     />
                 </div>
             </div>

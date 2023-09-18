@@ -1,7 +1,7 @@
 import { IconArrowNarrowRight } from "@tabler/icons-react";
 import React from "react";
 
-const Tab = ({ active, setActive, data }) => {
+const Tab = ({ active, setActive, data}) => {
     const onClickHandler = (id) => setActive(id);
     const onNextClickHandler = (e) => {
         e.preventDefault();
@@ -70,6 +70,7 @@ const Tab = ({ active, setActive, data }) => {
             </button>
             {active == data.length ? (
                 <button
+
                     form="user_form"
                     value="Submit"
                     type="submit"

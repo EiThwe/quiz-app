@@ -42,10 +42,7 @@ class QuestionController extends Controller
             array_push($answers, $answer);
         }
         $question->answers()->createMany($answers);
-        //    return Inertia::render("Question/Index",[
-        //     "message" => "Questions and answers are created successfully",
-        //     "token" => rand(1,10000)
-        //    ]);
+       
         return redirect("/question")->with(["message" => "Questions and answers are created successfully", "token" => rand(1, 10000)]);
     }
 
