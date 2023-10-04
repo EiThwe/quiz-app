@@ -70,7 +70,6 @@ const Tab = ({ active, setActive, data}) => {
             </button>
             {active == data.length ? (
                 <button
-
                     form="user_form"
                     value="Submit"
                     type="submit"

@@ -68,6 +68,7 @@ const mockdata = [
         icon: IconUsersGroup,
         links: [
             { label: "Staff List", link: "/" },
+            { label: "Create Staff", link: "/create-staff" },
             // { label: "Edit Staff Info", link: "/" },
             // { label: "Recovery codes", link: "/" },
         ],

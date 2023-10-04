@@ -20,7 +20,6 @@ return new class extends Migration
             $table->foreignId("department_id");
             $table->foreignId("user_id");
             $table->enum("gender", ["male", "female"]);
-
             $table->timestamps();
         });
     }

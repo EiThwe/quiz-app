@@ -6,6 +6,10 @@ use App\Models\Teacher;
 use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
 use App\Models\Grade;
+
+use App\Models\Subject;
+use App\Models\TeacherGrade;
+use App\Models\TeacherSubject;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +26,8 @@ class TeacherController extends Controller
     public function create()
     {
         $grades = Grade::all();
-        return Inertia::render("Teachers/Create", ["grades" => $grades]);
+        $subjects = Subject::all();
+        return Inertia::render("Teachers/Create", ["grades" => $grades, "subjects" => $subjects]);
     }
 
     public function store(StoreTeacherRequest $request)
@@ -39,12 +44,15 @@ class TeacherController extends Controller
             "address" => "required|min:50",
             'email' => 'required|string|email|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            "grade_id" => "required|array",
+            "subject_id" => "required|array",
             'photos' => "required|array"
         ]);
         if ($validators->fails()) {
-            session()->flash('message', 'The item has been failed.');
+            session()->flash('message', 'Registration has been failed.');
             session()->flash('type', 'error');
-            return redirect()->back();
+
+            return redirect("/create-teacher")->with("errors", $validators->errors()->messages());
         }
 
         if ($request->hasFile("photos")) {
@@ -62,20 +70,40 @@ class TeacherController extends Controller
             'user_photo' => $photoUrl
         ]);
         if ($request->role == "teacher") {
-            Teacher::create([
+            $teacher = Teacher::create([
                 "name" => $request->name,
                 "date_of_birth" => $request->date_of_birth,
                 "address" => $request->address,
                 "phone_number" => $request->phone_number,
                 "gender" => $request->gender,
                 "user_id" => $user->id,
-                "grade_id" => $request->grade_id
             ]);
         }
-        $grades = Grade::all();
 
+        $teacher_grade_arr = [];
+        foreach ($request->grade_id as $grade) {
+            $teacher_grade_arr[] = [
+                "teacher_id" => $teacher->id,
+                "grade_id" => $grade
+            ];
+        }
+        TeacherGrade::insert($teacher_grade_arr);
+        
+        $teacher_subject_arr = [];
+        foreach ($request->subject_id as $subject) {
+            $teacher_subject_arr[] = [
+                "teacher_id" => $teacher->id,
+                "subject_id" => $subject
+            ];
+        }
+        TeacherSubject::insert($teacher_subject_arr);
+
+
+        session()->flash('message', 'A teacher is successfully registered');
+        session()->flash('type', 'success');
         // return Inertia::render("Teachers/Create", ["message" => "A teacher is created successfully", "grades" => $grades, "errors" => $request->session()->get('errors')]);
-        return redirect("/create-teacher")->with('errors', $request->session()->get('errors'));
+        // return redirect("/create-teacher")->with('errors', $request->session()->get('errors'));
+        return redirect("/create-teacher");
     }
 
     public function show(Teacher $teacher)

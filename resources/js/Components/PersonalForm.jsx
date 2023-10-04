@@ -4,13 +4,36 @@ import React, { useState } from "react";
 import { IconCalendar } from "@tabler/icons-react";
 import { Radio, Select, TextInput, Textarea } from "@mantine/core";
 
-const PersonalForm = ({ form, grades }) => {
-    // console.log(grades)
-    const options = grades.map((item) => {
-        return { value: item.id, label: item.name };
-    });
-    console.log(options);
+const PersonalForm = ({ form }) => {
+    // console.log(propsOptions)
+    // const options = propsOptions.map((item) => {
+    //     return { value: item.id, label: item.name };
+    // });
+    // console.log(options);
+    const now = new Date();
+    const eighteenYearsAgo = new Date(
+        now.getFullYear() - 18,
+        now.getMonth(),
+        now.getDate()
+    );
 
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    };
+
+    const [selectedDate, setSelectedDate] = useState(
+        formatDate(eighteenYearsAgo)
+    );
+    const handleDateChange = (date) => {
+        // Prevent selecting dates before eighteen years ago
+        if (date >= eighteenYearsAgo) {
+            setSelectedDate(date);
+        }
+    };
+    console.log(eighteenYearsAgo);
     return (
         <div className="w-full flex flex-col gap-5">
             <div className="flex w-full items-center">
@@ -44,14 +67,16 @@ const PersonalForm = ({ form, grades }) => {
                 </div>
                 <div className="w-[70%] mt-0">
                     <DateInput
-                        // value={value}
-                        // onChange={setValue}
+                        value={selectedDate}
+                        onChange={handleDateChange}
                         icon={<IconCalendar />}
                         placeholder="Date input"
                         classNames={{
                             input: "py-5 rounded-md placeholder:font-[400] placeholder:text-[#6B7280] text-[16px] text-gray-800",
                             icon: "text-blue-500",
                         }}
+                        format="YYYY-MM-DD"
+                        // minDate={}
                         {...form.getInputProps("date_of_birth")}
                         // error={form.errors.date_of_birth}
                     />
@@ -81,7 +106,7 @@ const PersonalForm = ({ form, grades }) => {
                     />
                 </div>
             </div>
-            <div className="flex w-full items-center">
+            {/* <div className="flex w-full items-center">
                 <div className="w-[30%]">
                     <label
                         htmlFor="grade"
@@ -101,7 +126,7 @@ const PersonalForm = ({ form, grades }) => {
 
                     />
                 </div>
-            </div>
+            </div> */}
             <div className="flex w-full items-start">
                 <div className="w-[30%]">
                     <label
@@ -114,7 +139,7 @@ const PersonalForm = ({ form, grades }) => {
                 <div className="w-[70%] flex flex-row gap-5 ">
                     <Textarea
                         className="w-full"
-                        minRows={5}
+                        minRows={8}
                         {...form.getInputProps("address")}
                         // error={form.errors.address}
                     />

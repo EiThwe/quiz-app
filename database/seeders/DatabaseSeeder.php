@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             QuizSeeder::class,
             SubjectSeeder::class,
             GradeSeeder::class,
+            GradeSubjectSeeder::class,
+            DepartmentSeeder::class
         ]);
     }
 }

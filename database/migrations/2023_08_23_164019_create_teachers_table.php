@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string("date_of_birth");
             $table->string("address");
             $table->string("phone_number");
-            $table->foreignId("grade_id");
             $table->foreignId("user_id");
             $table->enum("gender", ["male", "female"]);
             $table->timestamps();

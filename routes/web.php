@@ -52,6 +52,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/create-teacher', 'create')->name("teacher.create");
         Route::post('/teachers', 'store')->name("teacher.store");
     });
+    Route::controller(StuffController::class)->group(function () {
+        Route::get('/staffs', 'index')->name("teacher.index");
+        Route::get('/create-staff', 'create')->name("teacher.create");
+        Route::post('/staffs', 'store')->name("teacher.store");
+    });
     //    Route::post("/users/register",[UserController::class,'register'])->name("user.register");
 });
 

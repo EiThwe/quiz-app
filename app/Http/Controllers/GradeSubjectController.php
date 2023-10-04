@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Stuff;
-use App\Http\Requests\StoreStuffRequest;
-use App\Http\Requests\UpdateStuffRequest;
-use App\Models\Department;
-use Inertia\Inertia;
+use App\Models\GradeSubject;
+use Illuminate\Http\Request;
 
-class StuffController extends Controller
+class GradeSubjectController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,14 +20,13 @@ class StuffController extends Controller
      */
     public function create()
     {
-        $departments = Department::all();
-        return Inertia::render("Staffs/Create", ["departments" => $departments]);
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreStuffRequest $request)
+    public function store(Request $request)
     {
         //
     }
@@ -38,7 +34,7 @@ class StuffController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Stuff $stuff)
+    public function show(GradeSubject $gradeSubject)
     {
         //
     }
@@ -46,7 +42,7 @@ class StuffController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Stuff $stuff)
+    public function edit(GradeSubject $gradeSubject)
     {
         //
     }
@@ -54,7 +50,7 @@ class StuffController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateStuffRequest $request, Stuff $stuff)
+    public function update(Request $request, GradeSubject $gradeSubject)
     {
         //
     }
@@ -62,7 +58,7 @@ class StuffController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Stuff $stuff)
+    public function destroy(GradeSubject $gradeSubject)
     {
         //
     }

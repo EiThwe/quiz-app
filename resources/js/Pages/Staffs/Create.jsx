@@ -4,13 +4,9 @@ import PersonalForm from "@/Components/PersonalForm";
 import PhotoUpload from "@/Components/PhotoUpload";
 import Tab from "@/Components/Tab";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
-import { router, usePage } from "@inertiajs/react";
+// import { router, usePage } from "@inertiajs/react";
 import { useForm } from "@mantine/form";
-import {
-    IconArrowAutofitRight,
-    IconArrowNarrowRight,
-} from "@tabler/icons-react";
-import dayjs from "dayjs";
+
 import React, { useEffect, useState } from "react";
 
 const mockdata = [
@@ -28,23 +24,13 @@ const mockdata = [
     },
 ];
 
-const Create = ({ errors, flash, auth, grades, subjects }) => {
+const Create = ({ errors, flash, auth, departments }) => {
     console.log(flash);
     console.log(errors);
-    console.log(subjects);
-    const { message, token } = usePage().props.flash;
-    const [alert, setAlert] = useState(false);
+    // const { message, token } = usePage().props.flash;
+    // const [alert, setAlert] = useState(false);
 
     const [active, setActive] = useState(1);
-
-    // useEffect(() => {
-    //     if (message) {
-    //         setAlert(true);
-    //         setTimeout(() => {
-    //             setAlert(false);
-    //         }, 2000);
-    //     }
-    // }, [token]);
 
     const form = useForm({
         initialValues: {
@@ -53,9 +39,8 @@ const Create = ({ errors, flash, auth, grades, subjects }) => {
             gender: "male",
             address: "ghasjljalkj",
             email: "cc@gmail.com",
-            role: "teacher",
-            grade_id: [],
-            subject_id: [],
+            role: "staff",
+            department_id: "",
             phone_number: "099887765541",
             password: "11223344",
             password_confirmation: "11223344",
@@ -68,16 +53,31 @@ const Create = ({ errors, flash, auth, grades, subjects }) => {
                 value && value.length >= 9
                     ? null
                     : "Phone number must be at least 9 digits",
-            date_of_birth: (value) =>
-                value ? null : "Date of birth is required",
+            date_of_birth: (value) => {
+                const now = new Date();
+                const minDate = new Date(
+                    now.getFullYear() - 18,
+                    now.getMonth(),
+                    now.getDate()
+                );
+                const inputDate = new Date(value);
+
+                // Check if date_of_birth is not empty
+                if (!value) {
+                    return "Date of birth is required";
+                }
+
+                // Check if date_of_birth is at least 18 years ago
+                return inputDate <= minDate
+                    ? null
+                    : "Must be 18 years or older.";
+            },
             gender: (value) =>
                 value && ["male", "female"].includes(value)
                     ? null
                     : "Gender must be male or female",
-            grade_id: (value) =>
-                value && value.length > 0 ? null : " Grade is required",
-            subject_id: (value) =>
-                value && value.length > 0 ? null : " Subject is required",
+            department_id: (value) =>
+                value ? null : " Department is required",
             address: (value) =>
                 value && value.length >= 50
                     ? null
@@ -96,12 +96,9 @@ const Create = ({ errors, flash, auth, grades, subjects }) => {
     });
 
     const onSubmitHandler = (values) => {
-        // values["date_of_birth"] = dayjs(values["date_of_birth"]).format(
-        //     "M/D/YYYY"
-        // );
         console.log(values);
 
-        router.post("/teachers", values);
+        // router.post("/teachers", values);
     };
 
     return (
@@ -109,18 +106,13 @@ const Create = ({ errors, flash, auth, grades, subjects }) => {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Create Teacher
+                    Create Stuff
                 </h2>
             }
         >
             {flash.message && (
                 <FlashMessage message={flash.message} type={flash.type} />
             )}
-            {/* {alert && (
-                <div className="bg-green-300 px-5 py-2 rounded-md mx-10 mt-5">
-                    {message}
-                </div>
-            )} */}
 
             <div className="p-8 flex">
                 <div className="w-[70%] shadow-lg rounded-md p-8 bg-white min-h-[430px]">
@@ -128,8 +120,10 @@ const Create = ({ errors, flash, auth, grades, subjects }) => {
                         onSubmit={form.onSubmit(
                             (values, _event) => {
                                 onSubmitHandler(values);
+                                console.log("click");
                             },
                             (validationErrors, _values, _event) => {
+                                console.log(validationErrors);
                                 if (validationErrors) {
                                     setActive(1);
                                 }
@@ -142,8 +136,7 @@ const Create = ({ errors, flash, auth, grades, subjects }) => {
                             <LoginInfo
                                 form={form}
                                 errors={errors}
-                                grades={grades}
-                                subjects={subjects}
+                                departments={departments}
                             />
                         )}
                         {active == 3 && <PhotoUpload form={form} />}
