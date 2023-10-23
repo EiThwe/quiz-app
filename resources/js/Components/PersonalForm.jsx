@@ -10,30 +10,30 @@ const PersonalForm = ({ form }) => {
     //     return { value: item.id, label: item.name };
     // });
     // console.log(options);
-    const now = new Date();
-    const eighteenYearsAgo = new Date(
-        now.getFullYear() - 18,
-        now.getMonth(),
-        now.getDate()
-    );
+    // const now = new Date();
+    // const eighteenYearsAgo = new Date(
+    //     now.getFullYear() - 18,
+    //     now.getMonth(),
+    //     now.getDate()
+    // );
 
-    const formatDate = (date) => {
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0");
-        const day = String(date.getDate()).padStart(2, "0");
-        return `${year}-${month}-${day}`;
-    };
+    // const formatDate = (date) => {
+    //     const year = date.getFullYear();
+    //     const month = String(date.getMonth() + 1).padStart(2, "0");
+    //     const day = String(date.getDate()).padStart(2, "0");
+    //     return `${year}-${month}-${day}`;
+    // };
 
-    const [selectedDate, setSelectedDate] = useState(
-        formatDate(eighteenYearsAgo)
-    );
-    const handleDateChange = (date) => {
-        // Prevent selecting dates before eighteen years ago
-        if (date >= eighteenYearsAgo) {
-            setSelectedDate(date);
-        }
-    };
-    console.log(eighteenYearsAgo);
+    // const [selectedDate, setSelectedDate] = useState(
+    //     formatDate(eighteenYearsAgo)
+    // );
+    // const handleDateChange = (date) => {
+    //     // Prevent selecting dates before eighteen years ago
+    //     if (date >= eighteenYearsAgo) {
+    //         setSelectedDate(date);
+    //     }
+    // };
+    // console.log(eighteenYearsAgo);
     return (
         <div className="w-full flex flex-col gap-5">
             <div className="flex w-full items-center">
@@ -67,8 +67,8 @@ const PersonalForm = ({ form }) => {
                 </div>
                 <div className="w-[70%] mt-0">
                     <DateInput
-                        value={selectedDate}
-                        onChange={handleDateChange}
+                        // value={selectedDate}
+                        // onChange={handleDateChange}
                         icon={<IconCalendar />}
                         placeholder="Date input"
                         classNames={{

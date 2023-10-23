@@ -4,6 +4,7 @@ import PersonalForm from "@/Components/PersonalForm";
 import PhotoUpload from "@/Components/PhotoUpload";
 import Tab from "@/Components/Tab";
 import Authenticated from "@/Layouts/AuthenticatedLayout";
+import { router } from "@inertiajs/react";
 // import { router, usePage } from "@inertiajs/react";
 import { useForm } from "@mantine/form";
 
@@ -39,7 +40,7 @@ const Create = ({ errors, flash, auth, departments }) => {
             gender: "male",
             address: "ghasjljalkj",
             email: "cc@gmail.com",
-            role: "staff",
+            role: "stuff",
             department_id: "",
             phone_number: "099887765541",
             password: "11223344",
@@ -53,25 +54,27 @@ const Create = ({ errors, flash, auth, departments }) => {
                 value && value.length >= 9
                     ? null
                     : "Phone number must be at least 9 digits",
-            date_of_birth: (value) => {
-                const now = new Date();
-                const minDate = new Date(
-                    now.getFullYear() - 18,
-                    now.getMonth(),
-                    now.getDate()
-                );
-                const inputDate = new Date(value);
+            // date_of_birth: (value) => {
+            //     const now = new Date();
+            //     const minDate = new Date(
+            //         now.getFullYear() - 18,
+            //         now.getMonth(),
+            //         now.getDate()
+            //     );
+            //     const inputDate = new Date(value);
 
-                // Check if date_of_birth is not empty
-                if (!value) {
-                    return "Date of birth is required";
-                }
+            //     //Check if date_of_birth is not empty
+            //     if (!value) {
+            //         return "Date of birth is required";
+            //     }
 
-                // Check if date_of_birth is at least 18 years ago
-                return inputDate <= minDate
-                    ? null
-                    : "Must be 18 years or older.";
-            },
+            //     // Check if date_of_birth is at least 18 years ago
+            //     return inputDate <= minDate
+            //         ? null
+            //         : "Must be 18 years or older.";
+            // },
+            date_of_birth: (value) =>
+                value ? null : "Date of birth is required",
             gender: (value) =>
                 value && ["male", "female"].includes(value)
                     ? null
@@ -98,7 +101,7 @@ const Create = ({ errors, flash, auth, departments }) => {
     const onSubmitHandler = (values) => {
         console.log(values);
 
-        // router.post("/teachers", values);
+        router.post("/staffs", values);
     };
 
     return (

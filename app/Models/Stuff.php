@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Stuff extends Model
 {
     use HasFactory;
-    protected $fillable = ["name","date_of_birth","address","phone_number","user_id","department_id","gender"];
-
+    protected $fillable = ["name", "date_of_birth", "address", "phone_number", "user_id", "department_id", "gender"];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

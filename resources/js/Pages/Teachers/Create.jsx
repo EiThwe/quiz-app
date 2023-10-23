@@ -144,6 +144,7 @@ const Create = ({ errors, flash, auth, grades, subjects }) => {
                                 errors={errors}
                                 grades={grades}
                                 subjects={subjects}
+                                departments={[]}
                             />
                         )}
                         {active == 3 && <PhotoUpload form={form} />}

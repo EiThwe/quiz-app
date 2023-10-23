@@ -8,6 +8,7 @@ const LoginInfo = ({ errors, form, grades, subjects, departments }) => {
     const departmentOptions = departments?.map((item) => {
         return { value: item.id, label: item.name };
     });
+    console.log(departments)
     console.log(departmentOptions);
     const gradeOptions = grades?.map((item) => {
         return { value: item.id, label: item.name };

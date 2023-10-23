@@ -21,6 +21,8 @@ class TeacherController extends Controller
 {
     public function index()
     {
+        $teachers = Teacher::with('user')->paginate(10);
+        return Inertia::render("Teachers/Index", ["teachers" => $teachers]);
     }
 
     public function create()
@@ -88,7 +90,7 @@ class TeacherController extends Controller
             ];
         }
         TeacherGrade::insert($teacher_grade_arr);
-        
+
         $teacher_subject_arr = [];
         foreach ($request->subject_id as $subject) {
             $teacher_subject_arr[] = [
